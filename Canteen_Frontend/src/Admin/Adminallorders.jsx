@@ -4,7 +4,7 @@ import React from 'react'
 function Adminallorders() {
   return (
     <div>
-      All orders
+      All orders again again
     </div>
   )
 }
