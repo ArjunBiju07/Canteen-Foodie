@@ -153,7 +153,7 @@ function Adminlunch() {
                     <input
                       type="submit"
                       className="btn btn-primary"
-                      value="Add Order"
+                      value="Add List"
                     />
                   </div>
                 </form>

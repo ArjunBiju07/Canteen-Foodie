@@ -58,6 +58,30 @@ function Adminbreakfast() {
         console.error("Error fetching breakfast items:", error);
       });
   }, []);
+
+  const handleDelete = (id) => {
+    const confirmDelete = window.confirm("Are you sure to delete?");
+    if (confirmDelete) {
+      fetch('http://localhost:3000/delbreakfast', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ del_id: id })
+      })
+        .then(response => {
+          if (response.ok) {
+            setBreakfastItems(breakfastItems.filter(i => i.id !== id));
+          }
+          else {
+            alert("Delete failed.Please try again")
+          }
+        })
+        .catch(err => {
+          console.error("Error while deleting,F", err)
+        })
+    }
+
+  }
+
   return (
 
 
@@ -80,7 +104,7 @@ function Adminbreakfast() {
           <table className="table table-hover table-bordered table-striped">
             <thead className="table-dark">
               <tr>
-                <th>ID</th>
+                <th>SL NO</th>
                 <th>Food</th>
                 <th>Price</th>
                 <th>Update</th>
@@ -88,19 +112,19 @@ function Adminbreakfast() {
               </tr>
             </thead>
             <tbody >
-            
-              {breakfastItems.map((item, index) => (    
+
+              {breakfastItems.map((item, index) => (
                 <tr key={index}>
-                  <td>{item.id}</td> 
+                  <td>{index += 1}</td>
                   <td>{item.food}</td>
                   <td>₹{item.price}</td>
                   <td><button className="btn btn-success btn-sm">Update</button></td>
-                  <td><button className="btn btn-danger btn-sm">Delete</button></td>
+                  <td><button className="btn btn-danger btn-sm"
+                    onClick={() => handleDelete(item.id)}
+                  >Delete</button></td>
                 </tr>
               ))}
-             
 
-              {/* Add more rows dynamically here */}
             </tbody>
           </table>
 
@@ -159,7 +183,7 @@ function Adminbreakfast() {
                     <input
                       type="submit"
                       className="btn btn-primary"
-                      value="Add Order"
+                      value="Add List"
                     />
                   </div>
                 </form>
