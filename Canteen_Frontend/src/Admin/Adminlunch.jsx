@@ -35,16 +35,39 @@ function Adminlunch() {
       })
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     fetch('http://localhost:3000/getlunch')
       .then(response => response.json())
-      .then(data=>{
+      .then(data => {
         setLunchitems(data)
       })
-      .catch(error=>{
-        console.error("Error fetching lunch items:",error);
+      .catch(error => {
+        console.error("Error fetching lunch items:", error);
       })
-  },[])
+  }, [])
+
+  const handleDelete = (id) => {
+    const confirmdelete = window.confirm("Are you sure to delete");
+    if (confirmdelete) {
+      fetch('http://localhost:3000/dellunch', {
+        method: "POST",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ del_id: id })
+      })
+        .then(response => {
+          if (response.ok) {
+            setLunchitems(lunchitems.filter(i => i.id !== id))
+          }
+          else{
+            alert("Error while deleting,Please try again")
+          }
+        })
+        .catch(err=>{
+          console.error("Error while deleting,F",err)
+        })
+    }
+
+  }
   return (
     <div className="layout">
       <Adminsidebar />
@@ -65,7 +88,7 @@ function Adminlunch() {
           <table className="table table-hover table-bordered table-striped">
             <thead className="table-dark">
               <tr>
-                <th>ID</th>
+                <th>SL NO</th>
                 <th>Food</th>
                 <th>Price</th>
                 <th>Update</th>
@@ -76,11 +99,13 @@ function Adminlunch() {
 
               {lunchitems.map((item, index) => (
                 <tr key={index}>
-                  <td>{item.id}</td>
+                  <td>{index+=1}</td>
                   <td>{item.food}</td>
                   <td>₹{item.price}</td>
                   <td><button className="btn btn-success btn-sm">Update</button></td>
-                  <td><button className="btn btn-danger btn-sm">Delete</button></td>
+                  <td><button className="btn btn-danger btn-sm"
+                    onClick={()=>handleDelete(item.id)}
+                  >Delete</button></td>
 
                 </tr>
               ))

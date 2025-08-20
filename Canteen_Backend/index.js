@@ -10,6 +10,7 @@ const getLunch = require('./Routes/getLunch');
 const getEvening = require('./Routes/getEvening');
 
 const delBreakfast = require('./Routes/delbreakfast');
+const delLunch = require('./Routes/dellunch');
 
 
 app.use(express.json());
@@ -25,6 +26,7 @@ app.use('/getlunch',getLunch);
 app.use('/getevening',getEvening);
 
 app.use('/delbreakfast',delBreakfast);
+app.use('/dellunch',delLunch);
 
 app.listen(3000, () => {
     console.log("Server is up http://localhost:3000 ")
