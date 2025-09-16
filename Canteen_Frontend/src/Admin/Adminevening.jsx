@@ -9,7 +9,7 @@ function Adminevening() {
 
   const [food, setFood] = useState('');
   const [price, setPrice] = useState('');
-  const [eveingitems,setEveningitems] = useState([]);
+  const [eveingitems, setEveningitems] = useState([]);
   const navigate = useNavigate();
 
   const insertEvening = (e) => {
@@ -18,32 +18,55 @@ function Adminevening() {
     fetch('http://localhost:3000/insertevening', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({food,price})
+      body: JSON.stringify({ food, price })
     })
-    .then(response=>response.json())
-    .then(data=>{
-      console.log("Result:",data)
-      alert(food+" added");
-      navigate(0);
-      setFood('');
-      setPrice('');
-    })
-    .catch(error=>{
-      console.error("Error",error);
-      
-    })
+      .then(response => response.json())
+      .then(data => {
+        console.log("Result:", data)
+        alert(food + " added");
+        navigate(0);
+        setFood('');
+        setPrice('');
+      })
+      .catch(error => {
+        console.error("Error", error);
+
+      })
   }
 
-  useEffect(()=>{
-      fetch('http://localhost:3000/getevening')
-      .then(response=> response.json())
-      .then(data=>{
-          setEveningitems(data);
+  useEffect(() => {
+    fetch('http://localhost:3000/getevening')
+      .then(response => response.json())
+      .then(data => {
+        setEveningitems(data);
       })
-      .catch(error=>{
-        console.error("Error while fetching,useEffect",error)
+      .catch(error => {
+        console.error("Error while fetching,useEffect", error)
       })
-  },[])
+  }, [])
+
+  const handleDelete = (id) => {
+    const confirmDelete = window.confirm("Are you sure to delete?");
+    if(confirmDelete){
+      fetch('http://localhost:3000/delevening',{
+        method: 'POST',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({del_id : id})
+      })
+      .then(response=>{
+        if(response.ok){
+          setEveningitems(eveingitems.filter(i => i.id !== id));
+        }
+        else{
+          alert("Delete failed.please try again");
+        }
+      })
+      .catch(err => {
+        console.error("Error while deleting,F",err);
+      })
+    }
+
+  }
 
   return (
     <div className="layout">
@@ -74,15 +97,16 @@ function Adminevening() {
             </thead>
             <tbody>
               {
-                eveingitems.map((items,index)=>(
-              <tr key={index}>
-                <td>{items.id}</td>
-                <td>{items.food}</td>
-                <td>{items.price}</td>
-                <td><button className="btn btn-success btn-sm">Update</button></td>
-                <td><button className="btn btn-danger btn-sm">Delete</button></td>
-              </tr>
-                  
+                eveingitems.map((items, index) => (
+                  <tr key={index}>
+                    <td>{index+=1}</td>
+                    <td>{items.food}</td>
+                    <td>{items.price}</td>
+                    <td><button className="btn btn-success btn-sm">Update</button></td>
+                    <td><button className="btn btn-danger btn-sm"
+                    onClick={()=>handleDelete(items.id)}>Delete</button></td>
+                  </tr>
+
                 ))
               }
               {/* Add more rows dynamically here */}
