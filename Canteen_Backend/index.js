@@ -13,6 +13,9 @@ const delBreakfast = require('./Routes/delbreakfast');
 const delLunch = require('./Routes/dellunch');
 const delEvening = require('./Routes/delevening');
 
+const showeditbreak = require("./Routes/showeditbreak");
+const updatebreak = require("./Routes/updatebreak");
+
 
 app.use(express.json());
 app.use(cors());
@@ -29,6 +32,10 @@ app.use('/getevening', getEvening);
 app.use('/delbreakfast', delBreakfast);
 app.use('/dellunch', delLunch);
 app.use('/delevening', delEvening);
+
+app.use('/showeditbreak',showeditbreak);
+
+app.use('/updatebreak',updatebreak);
 
 app.listen(3000, () => {
     console.log("Server is up http://localhost:3000 ")

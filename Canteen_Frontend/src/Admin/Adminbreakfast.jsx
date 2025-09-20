@@ -82,6 +82,10 @@ function Adminbreakfast() {
 
   }
 
+  const goEdit = (id)=>{
+    navigate(`/admineditbreak/${id}`);
+  }
+
   return (
 
 
@@ -118,7 +122,9 @@ function Adminbreakfast() {
                   <td>{index += 1}</td>
                   <td>{item.food}</td>
                   <td>₹{item.price}</td>
-                  <td><button className="btn btn-success btn-sm">Update</button></td>
+                  <td><button className="btn btn-success btn-sm"
+                    onClick={()=> goEdit(item.id)}
+                  >Update</button></td>
                   <td><button className="btn btn-danger btn-sm"
                     onClick={() => handleDelete(item.id)}
                   >Delete</button></td>

@@ -14,6 +14,7 @@ import Adminlunch from './Admin/Adminlunch';
 import Adminbreakfast from './Admin/Adminbreakfast';
 import Adminevening from './Admin/Adminevening';
 import Adminallorders from './Admin/Adminallorders';
+import Admineditbreak from './Admin/Admineditbreak';
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
         <Route path='/adminbreakfast' element={<Adminbreakfast />}></Route>
         <Route path='/adminevening' element={<Adminevening />}></Route>
         <Route path='/adminallorders' element={<Adminallorders />}></Route>
+        <Route path='/admineditbreak/:id' element={<Admineditbreak />}></Route>
         
       </Routes>
     </BrowserRouter>

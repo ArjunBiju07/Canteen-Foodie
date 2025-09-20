@@ -14,6 +14,7 @@ function AdminHome() {
           <h3>WELCOME TO ADMIN PAGE</h3>
           <h4>Here you can manage the food items and orders</h4>
           <h4>Click on the above links to manage the food items and orders</h4>
+          <a href="/">guest</a>
         </div>
       </div>
     </div>
